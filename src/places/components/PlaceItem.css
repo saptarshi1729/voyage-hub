@@ -1,14 +1,18 @@
 .place-item {
-    margin: 1rem 0;
+    margin: 1.5rem 0;
   }
   
   .place-item__content {
-    padding: 0;
+    padding: 1;
+    border-radius: 8px;
   }
   
   .place-item__info {
-    padding: 1rem;
+    padding: 1.5rem;
     text-align: center;
+    border: 1px solid #ccc; /* Optional: Add a subtle border around the info */
+    border-radius: 6px; /* Optional: Match border-radius with content */
+    background-color: #f9f9f9;
   }
   
   .place-item__image {
