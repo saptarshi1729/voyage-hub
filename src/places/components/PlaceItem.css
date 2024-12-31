@@ -53,8 +53,8 @@
   }
 
   .map-container {
-    padding-left: 0.5rem;
-    height: 6rem;
+    margin: 0.5rem auto;
+    height: 16rem;
     width: 100%;
   }
   
