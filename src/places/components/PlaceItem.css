@@ -51,6 +51,12 @@
   .place-item__actions a {
     margin: 0.5rem;
   }
+
+  .map-container {
+    padding-left: 0.5rem;
+    height: 6rem;
+    width: 100%;
+  }
   
   @media (min-width: 768px) {
     .place-item__image {

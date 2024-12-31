@@ -15,6 +15,8 @@ const PlaceItem = (props) => {
         show={showMap}
         onCancel={closeMapHandler}
         header={props.address}
+        // className=""     Can be customized or left as it is
+        // headerClass=""   Can be customized or left as it is
         contentClass="place-item__modal-content"
         footerClass="place-item__modal-actions"
         footer={<Button onClick={closeMapHandler}>CLOSE</Button>}
