@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import Input from "../../shared/components/FormElements/Input";
@@ -40,10 +40,25 @@ const DUMMY_PLACES = [
 ];
 
 const UpdatePlace = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const placeId = useParams().placeId;
-  const identifiedPlace = DUMMY_PLACES.find((p) => p.id === placeId);
-  const [formState, inputHandler] = useForm(
+  const [formState, inputHandler, setFormData] = useForm(
     {
+      title: {
+        value: '',
+        isValid: false,
+      },
+      description: {
+        value: '',
+        isValid: false,
+      },
+    },
+    false
+  );
+
+  const identifiedPlace = DUMMY_PLACES.find((p) => p.id === placeId);
+  useEffect(() => {
+    setFormData({
       title: {
         value: identifiedPlace ? identifiedPlace.title : '',
         isValid: true,
@@ -52,8 +67,9 @@ const UpdatePlace = () => {
         value: identifiedPlace ? identifiedPlace.description : '',
         isValid: true,
       },
-    }
-  );
+    }, true);
+    setIsLoading(false);
+  }, [setFormData, identifiedPlace]);
 
   const placeUpdateSubmitHandler = (event) => {
     event.preventDefault();
@@ -64,6 +80,15 @@ const UpdatePlace = () => {
     return (
       <div className="center">
         <h2>Could not find place!</h2>
+      </div>
+    );
+  }
+  // Temporary workaround to avoid rendering when there is no data, because this
+  // won't re-render when it gets data.
+  if(isLoading){
+    return (
+      <div className="center">
+        <h2>Loading!</h2>
       </div>
     );
   }
