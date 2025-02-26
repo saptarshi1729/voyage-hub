@@ -17,9 +17,3 @@
       border-radius: 8px; /* Optional: Make it look better */
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Optional: Add subtle shadow */
   }
-
-  .place-list.center button {
-    margin: 0.75rem;
-    padding: 0.5rem; /* Add space around the text */
-  }
-  
