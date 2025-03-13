@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Card from "../../shared/components/UIElements/Card";
 import Input from "../../shared/components/FormElements/Input";
@@ -6,12 +6,13 @@ import Button from "../../shared/components/FormElements/Button";
 import {
   VALIDATOR_MINLENGTH,
   VALIDATOR_EMAIL,
+  VALIDATOR_REQUIRE,
 } from "../../shared/util/validators";
 import { useForm } from "../../shared/hooks/form-hook";
 import "./Auth.css";
 
 const Auth = () => {
-  const [formState, inputHandler] = useForm(
+  const [formState, inputHandler, setFormData] = useForm(
     {
       email: {
         value: "",
@@ -25,16 +26,52 @@ const Auth = () => {
     false
   );
 
+  const [isLoginMode, setIsLoginMode] = useState(true);
+
   const authSubmitHandler = (event) => {
     event.preventDefault();
     console.log(formState.inputs); // send this to backend later.
   };
+
+  const switchLoginModeHandler = () => {
+    if(isLoginMode) {
+      setFormData({
+          ...formState.inputs,
+          name: {
+            value: "",
+            isValid: false
+          },
+        },
+        false
+      );
+    } else {
+      setFormData({
+        ...formState.inputs,
+        name: undefined
+      },
+      formState.inputs.email.isValid && formState.inputs.password.isValid
+    );
+    }
+    setIsLoginMode(prevMode => !prevMode);
+  }
 
   return (
     <Card className="authentication">
       <h2 className="authentication__header">Login Required</h2>
       <hr />
       <form className="authentication form" onSubmit={authSubmitHandler}>
+        {
+          !isLoginMode &&
+          <Input
+            id="name"
+            element="input"
+            type="text"
+            label="Name"
+            validators={[VALIDATOR_REQUIRE()]}
+            errorText="Please enter a name"
+            onInput={inputHandler}
+          />
+        }
         <Input
           id="email"
           element="input"
@@ -54,9 +91,12 @@ const Auth = () => {
           onInput={inputHandler}
         />
         <Button type="submit" disabled={!formState.isValid}>
-          LOGIN
+          {isLoginMode?"LOGIN":"SIGNUP"}
         </Button>
       </form>
+      <Button inverse onClick={switchLoginModeHandler}>
+        SWITCH TO {isLoginMode?"SIGNUP":"LOGIN"}
+      </Button>
     </Card>
   );
 };
