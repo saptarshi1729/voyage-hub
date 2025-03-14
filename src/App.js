@@ -19,11 +19,11 @@ const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const login = useCallback(() => {
-    isLoggedIn = true;
+    setIsLoggedIn(true);
   }, []);
 
   const logout = useCallback(() => {
-    isLoggedIn = false;
+    setIsLoggedIn(false);
   }, []);
 
   return (
